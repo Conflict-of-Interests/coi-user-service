@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.coi.revanauts.exceptions.BadRequestException;
 import com.revature.coi.revanauts.exceptions.ResourceCreationException;
 import com.revature.coi.revanauts.exceptions.ResourceNotFoundException;
 import com.revature.coi.revanauts.models.User;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	public User getByUsername(User user) {
 		List<User> foundUsers = userRepository.findByUsername(user.getUsername());
 		
-		if(foundUsers == null) {
+		if(foundUsers.isEmpty()) {
 			throw new ResourceNotFoundException("User not found by username: " + user.getUsername());
 		}
 		
@@ -60,6 +61,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User update(User user) {
+		if(user.getId() == 0) {
+			throw new BadRequestException("Cannot update user with ID 0.");
+		}
+		
 		userRepository.save(user);
 		
 		return user;
