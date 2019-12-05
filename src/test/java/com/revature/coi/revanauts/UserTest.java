@@ -82,4 +82,9 @@ public class UserTest {
 	public void getUserByIdSuccessAndHasNameTest() {
 		get("/users/4").then().statusCode(200).body("firstName", equalTo("Margaret"));
 	}
+	
+	@Test
+	public void getUserByIdNotFoundTest() {
+		get("/users/103").then().assertThat().statusCode(404);
+	}
 }
