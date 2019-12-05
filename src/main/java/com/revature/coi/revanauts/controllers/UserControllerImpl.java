@@ -23,27 +23,27 @@ public class UserControllerImpl implements UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping
+	@GetMapping(produces="application/json")
 	public List<User> getAllUsers() {
 		return userService.getAll();
 	}
 
-	@GetMapping("/username/{username}")
+	@GetMapping(value="/username/{username}", produces="application/json")
 	public User getUserByUsername(@PathVariable("username") String username) {
 		return userService.getByUsername(new User(username));
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping(value="/{id}", produces="application/json")
 	public User getUserById(@PathVariable("id") long id) {
 		return userService.getById(new User(id));
 	}
 
-	@PostMapping
+	@PostMapping(produces="application/json", consumes="application/json")
 	public User registerUser(@RequestBody User user) {
 		return userService.register(user);
 	}
 
-	@PutMapping
+	@PutMapping(produces="application/json", consumes="application/json")
 	public User updateUser(@RequestBody User user) {
 		return userService.update(user);
 	}
