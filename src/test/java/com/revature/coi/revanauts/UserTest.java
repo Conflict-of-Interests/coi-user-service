@@ -87,4 +87,19 @@ public class UserTest {
 	public void getUserByIdNotFoundTest() {
 		get("/users/103").then().assertThat().statusCode(404);
 	}
+	
+	@Test
+	public void getUserByUsernameSuccessTest() {
+		get("/users/username/clevistrauss").then().assertThat().statusCode(200);
+	}
+	
+	@Test
+	public void getUserByIdUsernameAndHasNameTest() {
+		get("/users/username/clevistrauss").then().statusCode(200).body("firstName", equalTo("Claude"));
+	}
+	
+	@Test
+	public void getUserByUsernameNotFoundTest() {
+		get("/users/username/pitropitro").then().assertThat().statusCode(404);
+	}
 }
