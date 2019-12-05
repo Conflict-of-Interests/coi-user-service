@@ -6,8 +6,8 @@ import com.revature.coi.revanauts.models.User;
 
 public interface UserController {
 	public List<User> getAllUsers();
-	public User getUserByUsername(User user);
-	public User getUserById(User user);
+	public User getUserByUsername(String username);
+	public User getUserById(long id);
 	public User registerUser(User user);
 	public User updateUser(User user);
 }

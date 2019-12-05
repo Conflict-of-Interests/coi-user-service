@@ -25,6 +25,14 @@ public class User {
 	private String batchCode;
 	
 	public User() {}
+	
+	public User(long id) {
+		this.id = id;
+	}
+	
+	public User(String username) {
+		this.username = username;
+	}
 
 	public User(long id, String firstName, String lastName, String username, String batchCode) {
 		this.id = id;

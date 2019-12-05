@@ -27,13 +27,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getByUsername(User user) {
-		User foundUser = userRepository.findByUsername(user.getUsername());
+		List<User> foundUsers = userRepository.findByUsername(user.getUsername());
 		
-		if(foundUser == null) {
+		if(foundUsers == null) {
 			throw new ResourceNotFoundException("User not found by username: " + user.getUsername());
 		}
 		
-		return foundUser;
+		return foundUsers.get(0);
 	}
 
 	@Override
