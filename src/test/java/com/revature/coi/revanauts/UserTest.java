@@ -44,6 +44,26 @@ public class UserTest {
 	}
 	
 	@Test
+	public void updateUserTest() {
+		with().body(new User(7, "Pitro", "Alagna", "peter.alagna@revature.com", "BATCH-ID-000028"))
+		.when()
+		.contentType(ContentType.JSON)
+		.request("PUT","/users")
+		.then()
+		.statusCode(200);	
+	}
+	
+	@Test
+	public void updateUserWithBadIdTest() {
+		with().body(new User(0, "Pitro", "Alagna", "peter.alagna@revature.com", "BATCH-ID-000028"))
+		.when()
+		.contentType(ContentType.JSON)
+		.request("PUT","/users")
+		.then()
+		.statusCode(400);
+	}
+	
+	@Test
 	public void getAllUsersIfNotEmptyTest() {
 		get("/users").then().assertThat().statusCode(200);
 	}

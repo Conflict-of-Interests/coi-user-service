@@ -6,7 +6,9 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.revature.coi.revanauts.exceptions.BadRequestException;
 import com.revature.coi.revanauts.exceptions.ResourceCreationException;
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
 		List<User> foundUsers = userRepository.findByUsername(user.getUsername());
 		
 		if(foundUsers.isEmpty()) {
-			throw new ResourceNotFoundException("User not found by username: " + user.getUsername());
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found by username: " + user.getUsername());
 		}
 		
 		return foundUsers.get(0);
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService {
 			return _user.get();
 		}
 		
-		throw new ResourceNotFoundException("User not found by id: " + user.getId());
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found by id: " + user.getId());
 	}
 
 	@Override
@@ -56,13 +58,13 @@ public class UserServiceImpl implements UserService {
 			return user;
 		}
 		
-		throw new ResourceCreationException("Could not save User.");
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not save User");
 	}
 
 	@Override
 	public User update(User user) {
 		if(user.getId() == 0) {
-			throw new BadRequestException("Cannot update user with ID 0.");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot update user with ID 0");
 		}
 		
 		userRepository.save(user);
