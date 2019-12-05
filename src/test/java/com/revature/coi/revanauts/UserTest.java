@@ -16,6 +16,11 @@ import com.revature.coi.revanauts.models.User;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
+import static io.restassured.RestAssured.*;
+import static io.restassured.matcher.RestAssuredMatchers.*;
+import static org.hamcrest.Matchers.*;
+
+@SuppressWarnings("unused")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserTest {
@@ -29,7 +34,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void getAllUsersIfNoExceptionsTest() {
+	public void getAllUsersSuccessTest() {
 		get("/users").then().assertThat().statusCode(200);
 	}
 	
@@ -65,6 +70,16 @@ public class UserTest {
 	
 	@Test
 	public void getAllUsersIfNotEmptyTest() {
-		get("/users").then().assertThat().statusCode(200);
+		get("/users").then().statusCode(200).body("results.size()", greaterThan(0));
+	}
+	
+	@Test
+	public void getUserByIdSuccessTest() {
+		get("/users/5").then().assertThat().statusCode(200);
+	}
+	
+	@Test
+	public void getUserByIdSuccessAndHasNameTest() {
+		get("/users/4").then().statusCode(200).body("firstName", equalTo("Margaret"));
 	}
 }
