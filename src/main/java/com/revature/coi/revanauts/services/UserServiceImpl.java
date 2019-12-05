@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	public User getByUsername(User user) {
 		List<User> foundUsers = userRepository.findByUsername(user.getUsername());
 		
-		if(foundUsers == null) {
+		if(foundUsers.isEmpty()) {
 			throw new ResourceNotFoundException("User not found by username: " + user.getUsername());
 		}
 		
