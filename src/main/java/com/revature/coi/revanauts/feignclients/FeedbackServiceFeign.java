@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient("feedback-service")
 public interface FeedbackServiceFeign {
-  
+//  This is not right, but in the right vein:
   @GetMapping("/feedback/{id}")
-  public String getFeedback(@PathVariable long id);
+  public Object getFeedback(@PathVariable long id);
 
 }

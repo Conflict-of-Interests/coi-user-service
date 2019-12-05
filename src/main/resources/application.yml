@@ -41,3 +41,6 @@ spring:
     database: postgresql
 server:
   port: 80
+feedback-service:
+  ribbon:
+    listOfServers: 35.193.218.142
